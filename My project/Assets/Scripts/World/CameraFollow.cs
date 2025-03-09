@@ -5,7 +5,7 @@ public class CameraFollow : MonoBehaviour
     public Transform player;  // Reference to the player
     public float smoothSpeed = 0.125f;  // Smooth camera movement
     public float fixedYPosition = 0f;  // Lock Y position (Adjust in Inspector)
-    public float offsetX = 1f;  // Horizontal offset (Optional)
+    public float offsetX = 0f;  // Horizontal offset (Optional)
 
     void LateUpdate()
     {
