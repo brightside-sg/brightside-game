@@ -3,42 +3,42 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float jumpForce = 7f;
     private Rigidbody2D rb;
-    private bool isGrounded;
+    private bool facingRight = true;
+    public Transform spriteTransform;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()  // Use FixedUpdate for physics-based movement
     {
-        // Move Left and Right
-        float moveInput = Input.GetAxis("Horizontal");
+        float moveInput = Input.GetAxisRaw("Horizontal");  // Instant response
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
-        // Jump (only when grounded)
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        // Flip Player if Changing Direction
+        if (moveInput > 0 && !facingRight)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            Flip();
+        }
+        else if (moveInput < 0 && facingRight)
+        {
+            Flip();
         }
     }
 
-    // Detect when the player touches the ground
-    private void OnCollisionEnter2D(Collision2D collision)
+    void Flip()
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        facingRight = !facingRight;
+        spriteTransform.rotation = Quaternion.Euler(0, facingRight ? 0 : 180, 0);
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGrounded = false;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);  // Ensures smooth movement
         }
     }
 }
