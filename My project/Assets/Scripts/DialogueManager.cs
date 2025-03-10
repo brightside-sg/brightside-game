@@ -1,50 +1,91 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 using System.Collections.Generic;
 
 public class DialogueManager : MonoBehaviour
 {
     public TextMeshProUGUI dialogueText; // Displays NPC's dialogue
+    public GameObject dialogueBox; // Holds the dialogue UI
     public GameObject responsePanel; // Holds response buttons
     public Button responseButtonPrefab; // Prefab for response buttons
     public Transform responseContainer; // Where buttons will be spawned
 
     private List<Button> activeButtons = new List<Button>(); // Keep track of active buttons
+    private Queue<string> sentences; // Stores multiple lines of NPC dialogue
+    private bool awaitingResponse = false; // Prevents skipping over responses
 
     void Start()
     {
-        // Example NPC dialogue and choices
-        ShowDialogue("Hello, traveler! What would you like to do?", 
-                     new string[] { "Trade", "Ask about the town", "Leave" });
+        dialogueBox.SetActive(false); // Hide dialogue UI at the beginning
+        responsePanel.SetActive(false); // Hide response panel at the beginning
+        sentences = new Queue<string>(); // Initialize the queue
     }
 
-public void ShowDialogue(string question, string[] responses)
-{
-    dialogueText.text = question; // Show the NPC question
-
-    ClearPreviousResponses(); // Remove old buttons before adding new ones
-
-    foreach (string response in responses)
+    public void ShowDialogue(string npcName, string[] npcDialogue, string[] responses)
     {
-        Button newButton = Instantiate(responseButtonPrefab, responseContainer);
-        newButton.GetComponentInChildren<TextMeshProUGUI>().text = response;
-        newButton.onClick.AddListener(() => SelectResponse(response));
+        Time.timeScale = 0f; // Pause the game when dialogue starts
+        dialogueBox.SetActive(true);
+        sentences.Clear();
 
-        activeButtons.Add(newButton);
+        // Add all NPC dialogue lines to the queue
+        foreach (string line in npcDialogue)
+        {
+            sentences.Enqueue(line);
+        }
+
+        StartCoroutine(DisplayDialogue(responses ?? new string[0])); // Ensure a valid array
     }
 
-    responsePanel.SetActive(true); // Show response options
+    IEnumerator DisplayDialogue(string[] responses)
+    {
+        awaitingResponse = false; // Ensure no response selection yet
 
-    // Force layout update to apply spacing immediately
-    LayoutRebuilder.ForceRebuildLayoutImmediate(responseContainer.GetComponent<RectTransform>());
-}
+        while (sentences.Count > 0)
+        {
+            dialogueText.text = sentences.Dequeue();
+
+            // Wait for Space key to be pressed, ensuring only one press is counted
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+            yield return new WaitUntil(() => Input.GetKeyUp(KeyCode.Space)); // Wait for release
+        }
+
+        // After all dialogue lines, show response options (if any)
+        if (responses.Length > 0)
+        {
+            ShowResponses(responses);
+        }
+        else
+        {
+            EndDialogue(); // If no responses, end dialogue
+        }
+    }
+
+    void ShowResponses(string[] responses)
+    {
+        awaitingResponse = true;
+        responsePanel.SetActive(true);
+        ClearPreviousResponses();
+
+        foreach (string response in responses)
+        {
+            Button newButton = Instantiate(responseButtonPrefab, responseContainer);
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = response;
+            newButton.onClick.AddListener(() => SelectResponse(response));
+            activeButtons.Add(newButton);
+        }
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(responseContainer.GetComponent<RectTransform>());
+    }
 
     void SelectResponse(string response)
     {
+        if (!awaitingResponse) return; // Prevent interaction if not expecting response
+
         Debug.Log("Player selected: " + response);
 
-        // TODO: Save choice for future use
+        // Save the player's choice for future use
         PlayerPrefs.SetString("LastChoice", response);
         PlayerPrefs.Save();
 
@@ -53,7 +94,10 @@ public void ShowDialogue(string question, string[] responses)
 
     void EndDialogue()
     {
+        Time.timeScale = 1f; // Resume the game when dialogue ends
+        dialogueBox.SetActive(false);
         responsePanel.SetActive(false);
+        awaitingResponse = false;
         ClearPreviousResponses();
     }
 
