@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      chest hit animation_0: 7321426342093742
+      chest hit animation_1: 7115424011366097143
+      chest hit animation_2: 6196098826995231241
+      chest hit animation_3: 4498230708730219587
+      chest hit animation_4: -7884341856888910039
+      chest hit animation_5: 110566893061716275
+      chest hit animation_6: -1454586716840508910
+      chest hit animation_7: -2731021961488893120
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
