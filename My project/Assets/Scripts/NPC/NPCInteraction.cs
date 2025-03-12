@@ -1,20 +1,18 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class NPCInteraction : MonoBehaviour
 {
     public DialogueManager dialogueManager; // Reference to the dialogue system
-    public string npcName = "Shopkeeper"; // Future-proofing for multiple NPCs
-    public string[] npcDialogue; // NPC-specific dialogue
-    public string[] npcResponses; // Player response options
+    public string npcName; // Set in Unity for each NPC
 
-    private bool dialogueTriggered = false; // Ensures dialogue only plays once
+    private bool dialogueTriggered = false;
 
     void Start()
     {
-        // Get reference to DialogueManager if not set manually
         if (dialogueManager == null)
         {
-            dialogueManager = FindFirstObjectByType<DialogueManager>(); // Updated method
+            dialogueManager = FindFirstObjectByType<DialogueManager>();
         }
     }
 
@@ -30,8 +28,9 @@ public class NPCInteraction : MonoBehaviour
     {
         if (dialogueManager != null)
         {
-            dialogueManager.ShowDialogue(npcName, npcDialogue, npcResponses ?? new string[0]);
-            dialogueTriggered = true; // Prevents re-triggering
+            DialogueData npcDialogue = DialogueDatabase.GetDialogue(npcName);
+            dialogueManager.StartDialogue(npcDialogue.npcName, npcDialogue.dialogueSteps);
+            dialogueTriggered = true;
         }
     }
 }
