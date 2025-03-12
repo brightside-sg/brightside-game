@@ -64,12 +64,14 @@ public class DialogueManager : MonoBehaviour
         foreach (var response in responseMap)
         {
             Button newButton = Instantiate(responseButtonPrefab, responseContainer);
-            newButton.GetComponentInChildren<TextMeshProUGUI>().text = response.Key;
+            TMP_Text buttonText = newButton.GetComponentInChildren<TMP_Text>();
+            buttonText.text = response.Key;
             newButton.onClick.AddListener(() => SelectResponse(response.Value));
             activeButtons.Add(newButton);
         }
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(responseContainer.GetComponent<RectTransform>());
+        Canvas.ForceUpdateCanvases();
     }
 
     void SelectResponse(string nextNpcDialogue)
