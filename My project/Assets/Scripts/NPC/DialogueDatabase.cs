@@ -78,13 +78,13 @@ public static class DialogueDatabase
                             new Dictionary<string, string>() // No responses
                         ),
                         new DialogueStep(
-                            "(They turn to you expectantly)/n Who do you believe?",
+                            "(They turn to you expectantly)\n Who do you believe?",
                             new Dictionary<string, string>
                             {
                                 { "How about you guys share it? Looks like you can't carry everything back by yourself anyway.", 
                                 "(They calm down, not expecting such an answer)\n On second thought, he does make sense..." },
                                 { "I don't know, you guys will have to figure it out yourselves.", 
-                                "Bah!/n (The argument continues, each trying to convince the other they're right)" },
+                                "Bah!\n (The argument continues, each trying to convince the other they're right)" },
                                 {"Well, only one of you can be right, and I think its...\n (You point at one of them)", 
                                 "Ha! I told you! (The other person looks dejected, but accepts the decision)" }
                             }
