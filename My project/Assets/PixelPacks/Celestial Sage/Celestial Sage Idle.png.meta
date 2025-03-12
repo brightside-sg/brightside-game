@@ -409,7 +409,19 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Celestial Sage Idle_0: -7477842122092216505
+      Celestial Sage Idle_1: 4282051377085870523
+      Celestial Sage Idle_10: 8091529793736219054
+      Celestial Sage Idle_11: 2612911787051858899
+      Celestial Sage Idle_2: 5903748243734976271
+      Celestial Sage Idle_3: -5013484324712607174
+      Celestial Sage Idle_4: 5388886019626907895
+      Celestial Sage Idle_5: 716085691397377416
+      Celestial Sage Idle_6: 5952531936396117675
+      Celestial Sage Idle_7: -6677791231952827759
+      Celestial Sage Idle_8: -8629419615589914895
+      Celestial Sage Idle_9: 4028515985682480774
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

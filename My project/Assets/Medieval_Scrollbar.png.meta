@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Medieval_Scrollbar_0: -8262187077743754939
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

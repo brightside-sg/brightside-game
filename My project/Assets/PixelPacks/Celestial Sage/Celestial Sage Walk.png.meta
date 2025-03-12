@@ -409,7 +409,19 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Celestial Sage Walk_0: 3623626246507048255
+      Celestial Sage Walk_1: -6756150287627333840
+      Celestial Sage Walk_10: -5506647875558931957
+      Celestial Sage Walk_11: -1909824508730269666
+      Celestial Sage Walk_2: -6183853296231812135
+      Celestial Sage Walk_3: -8823245870403975447
+      Celestial Sage Walk_4: -3641922318986135646
+      Celestial Sage Walk_5: -8304200810247054918
+      Celestial Sage Walk_6: -7225234805628717735
+      Celestial Sage Walk_7: -6612827272317370070
+      Celestial Sage Walk_8: -1804542586398048816
+      Celestial Sage Walk_9: 8960787271821400640
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
